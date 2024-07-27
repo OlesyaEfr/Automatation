@@ -1,17 +1,12 @@
 from smartphone import Smartphone
 
-catalog = ["Iphone", "Samsung", "Sony", "Xiaomi", "Honor"]
+smartphone1 = Smartphone("Apple", "15Pro", "79779777779")
+smartphone2 = Smartphone("Samsung", "GalaxyS24", "79997779999")
+smartphone3 = Smartphone("Sony", "xperia10", "77779997799")
+smartphone4 = Smartphone("Xiaomi", "Redmi13C", "79011112233")
+smartphone5 = Smartphone("Honor", "X9b", "79011112345")
 
-iphone = Smartphone(catalog[0], "15Pro", "79779777779")
-iphone.inf()
-samsung = Smartphone(catalog[1], "GalaxyS24", "79997779999")
-samsung.inf()
-sony = Smartphone(catalog[2], "xperia10", "77779997799")
-sony.inf()
-xiaomi = Smartphone(catalog[3], "Redmi13C", "79011112233")
-xiaomi.inf()
-honor = Smartphone(catalog[4], "X9b", "79011112345")
-honor.inf()
+catalog = [smartphone1, smartphone2, smartphone3, smartphone4, smartphone5]
 
-
-
+for smartphones in catalog:
+    smartphones.inf()

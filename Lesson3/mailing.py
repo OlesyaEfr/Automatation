@@ -8,8 +8,5 @@ class Mailing:
         self.cost = cost
         self.track = track
 
-    #def mail(self):
-        #print("Отправление", self.track, "из", self.from_, "в", self.to, ".", "Стоимость", self.cost, "рублей.")
-        
 
  
