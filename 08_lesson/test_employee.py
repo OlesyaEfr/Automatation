@@ -42,11 +42,11 @@ def test_add_employer(get_token):
     new_employer_id = (employer.add_new(token, body_employer))['id']
     assert new_employer_id is not None
     assert str(new_employer_id).isdigit()
-
+    
     info = employer.get_info(new_employer_id)
     assert info.json()['id'] == new_employer_id
     assert info.status_code == 200
-
+           
 
 def test_add_employer_without_body(get_token):
     token = str(get_token)
