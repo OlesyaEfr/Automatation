@@ -25,6 +25,7 @@ def test_getcompany_id():
 
 
 def test_add_employer(get_token):
+  
     token = str(get_token)
     com_id = company.last_active_company_id()
     body_employer = {
@@ -42,10 +43,17 @@ def test_add_employer(get_token):
     new_employer_id = (employer.add_new(token, body_employer))['id']
     assert new_employer_id is not None
     assert str(new_employer_id).isdigit()
-    
+
     info = employer.get_info(new_employer_id)
     assert info.json()['id'] == new_employer_id
     assert info.status_code == 200
+
+    response = requests.post(self.url + '/employee', headers=headers, json=body)
+    response_data = response.json()
+    if 'id' in response_data:
+        return response_data['id']
+    else:
+        raise ValueError("Employee not created, response: " + str(response_data))
            
 
 def test_add_employer_without_body(get_token):

@@ -36,7 +36,7 @@ class Employer:
         headers = {'x-client-token': token}
         response = requests.post(
             self.url + '/employee', headers=headers, json=body)
-        return response.json()
+        return response.json()        
     
     def get_info(self, employee_id: int):
         response = requests.get(self.url + path + str(employee_id))
