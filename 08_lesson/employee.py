@@ -1,49 +1,45 @@
-import pytest
 import requests
+from constants import X_client_URl
 import json
 
 path = '/employee/'
 
+
 class Company:
-
-    def __init__(self, url='https://x-clients-be.onrender.com'):
+    def __init__(self,url=X_client_URl):
         self.url = url
 
-    def create_company(self, token: str, body: json):
-        headers = {'x-client-token': token}
-        response = requests.post(
-            self.url + '/company', headers=headers, params=body)
-        return response.json()
-    
-    def last_active_company_id(self):
+# Вызываем последнюю активную компанию
+    def last_active_company(self):
         active_params = {'active': 'true'}
-        response = requests.get(
-            self.url + '/company', params=active_params)
-        return response.json()[-1]['id']
-    
-class Employer:
+        response = requests.get(self.url + '/company', params=active_params)
+        return response.json()[-1]['id']   
 
-    def __init__(self, url='https://x-clients-be.onrender.com'):
+class Employee:
+    def __init__(self,url=X_client_URl):
         self.url = url
 
-    def get_list(self, company_id: int):
+# Получить список сотрудников компании
+    def get_list_employee_company(self,company_id:int):
         company = {'company': company_id}
-        response = requests.get(
-            self.url + '/employee', params=company)
+        response = requests.get(self.url + path,params= company)
+        return response.json()    
+
+# Добавляем сотрудника в компанию
+    def add_employee_into_company(self,token:str,body:json):
+        headers = {'x-client-token': token}
+        response = requests.post(self.url + path, headers=headers,json=body)
+        return response.json()    
+
+# Получение информации о сотруднике
+    def get_info_for_employee(self,id_employee:int):
+        response = requests.get(self.url + path +str(id_employee))
+        return response    
+
+# Изменение информации о сотруднике
+
+    def change_info_for_employee(self, token:str, id_employee:int, body:json):
+        headers = {'x-client-token': token}
+        response = requests.patch(self.url + path + str(id_employee), headers=headers,json=body)
         return response.json()
-    
-    def add_new(self, token: str, body: json):
-        headers = {'x-client-token': token}
-        response = requests.post(
-            self.url + '/employee', headers=headers, json=body)
-        return response.json()        
-    
-    def get_info(self, employee_id: int):
-        response = requests.get(self.url + path + str(employee_id))
-        return response
-    
-    def change_info(self, token: str, employee_id: int, body: json):
-        headers = {'x-client-token': token}
-        response = requests.patch(self.url + path + str(employee_id), headers=headers,
-                                  json=body)
-        return response
+        
