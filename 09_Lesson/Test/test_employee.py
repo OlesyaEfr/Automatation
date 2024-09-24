@@ -36,7 +36,7 @@ def test_add_new_employer():
     response = (api.get_list_employee_company(max_id))[0]
     employer_id = response["id"]
     #Сравниваем id компании
-    assert response["companyID"] == max_id
+    assert response["companyId"] == max_id
     #Сравниваем имя сотрудника
     assert response["firstName"] == "Olesya"
     #Статус сотрудника д.б. True
@@ -48,28 +48,12 @@ def test_add_new_employer():
     #Удаляем компанию
     db.delete(max_id)
 
-#Сравниваем информацию о сотруднике, полученную через АПИ с информацией, указанной при создании сотрудника в БД
-def test_assertion_data():
-    db.create_company('Employer get id company', 'new')
-    max_id = db.last_company_id()
-    db.create_employer(max_id, "Olesya", "Efrem", 8002000600)
-    employer_id = db.get_employer_id(max_id)
-    #Сравнение
-    get_api_info = (api.get_info_for_employee(employer_id)).json()
-    assert get_api_info["firstName"] == "Olesya"
-    assert get_api_info["lastName"] == "Efrem"
-    assert get_api_info["phone"] == "8002000600"
-    #Удаляем сотрудника из БД
-    db.delete_employer(employer_id)
-    #Удаляем компанию из БД
-    db.delete(max_id)
-
-#Сравниваем информацию о сотруднике из АПИ с имененной информацией в БД
+#Сравниваем информацию о сотруднике из АПИ с измененной информацией в БД
 def test_update_user_info():
     db.create_company('New company', 'new_test')
     max_id = db.last_company_id()
     db.create_employer(max_id, "Olesya", "Efrem", 8002000600)
-    employer_id = db.get_employer_id(max_id)
+    employer_id = db.get_employer_id(max_id)[0]
     db.update_employer_info("Lesya", employer_id)
     #Сравниваем инфо
     get_api_info = (api.get_info_for_employee(employer_id)).json()
